@@ -44,6 +44,7 @@ async function main() {
             streamPatterns
         },
 
+        // Native Framework CORS Configuration
         cors: {
             origin: process.env.CORS_ORIGIN ?? '*',
             methods: ['GET', 'OPTIONS'],
