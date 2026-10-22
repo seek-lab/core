@@ -38,14 +38,10 @@ async function main() {
             cacheTTL: 24 * 60 * 60 // 24h
         },
 
-        // Third Party Proxy configuration with restored header forwarding
+        // Third Party Proxy configuration
         proxyConfig: {
             knownThirdPartyProxies: knownThirdPartyProxies,
-            streamPatterns,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': '*/*'
-            }
+            streamPatterns
         },
 
         // Native Framework CORS Configuration
