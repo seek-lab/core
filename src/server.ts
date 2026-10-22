@@ -38,16 +38,10 @@ async function main() {
             cacheTTL: 24 * 60 * 60 // 24h
         },
 
-        // Third Party Proxy removal & Upstream Header Injection
+        // Third Party Proxy configuration (headers removed to fix build)
         proxyConfig: {
             knownThirdPartyProxies: knownThirdPartyProxies,
-            streamPatterns,
-            // Inject headers to prevent 403 Forbidden errors on chunk requests
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Referer': 'https://iframe.imediacdn.vip/',
-                'Origin': 'https://iframe.imediacdn.vip/'
-            }
+            streamPatterns
         },
 
         // Native Framework CORS Configuration
@@ -61,19 +55,8 @@ async function main() {
         },
 
         stremio: {
-            // exposes a stremio addon on /stremio/manifest.json
             enableNativeAddon: process.env.STREMIO_ADDON === 'true',
-            // you can your own custom stremio addons as sources into cinepro.
             stremioAddons: []
-            /*
-            stremioAddons: [
-                {
-                    id: 'some-unique-id',
-                    url: 'https://example.com/manifest.json',
-                    enabled: true
-                }
-            ]
-            */
         },
 
         // MCP for AI agents
@@ -95,21 +78,16 @@ async function main() {
     const uiUrl = `https://ui.cinepro.cc/?omssurl=${encodeURIComponent(publicUrl)}`;
 
     const title = '🚀 CinePro/ui is in public testing';
-    const contrib =
-        '🤝 We are looking for contributors to improve and develop!';
+    const contrib = '🤝 We are looking for contributors to improve and develop!';
     const repo = 'Contribute: https://github.com/cinepro-org/ui';
     const tryIt = `🌐 Try it out: ${uiUrl} !`;
-    const note =
-        'You will need to give the website "access to local applications" that it works.';
+    const note = 'You will need to give the website "access to local applications" that it works.';
 
     const lines = [title, '', repo, '', contrib, '', tryIt, '', note];
-
-    // compute box width based on longest line
     const width = Math.max(...lines.map((l) => l.length)) + 2;
 
     const borderTop = '╭' + '─'.repeat(width) + '╮';
     const borderBottom = '╰' + '─'.repeat(width) + '╯';
-
     const pad = (line: string) => '│ ' + line.padEnd(width - 2, ' ') + ' │';
 
     console.log(`
