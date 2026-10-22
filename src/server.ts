@@ -38,17 +38,21 @@ async function main() {
             cacheTTL: 24 * 60 * 60 // 24h
         },
 
-        // Third Party Proxy configuration (headers removed to fix build)
+        // Third Party Proxy configuration with restored header forwarding
         proxyConfig: {
             knownThirdPartyProxies: knownThirdPartyProxies,
-            streamPatterns
+            streamPatterns,
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': '*/*'
+            }
         },
 
         // Native Framework CORS Configuration
         cors: {
             origin: process.env.CORS_ORIGIN ?? '*',
             methods: ['GET', 'OPTIONS'],
-            allowedHeaders: ['Content-Type', 'Authorization'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'Referer', 'Origin'],
             exposedHeaders: ['Content-Range', 'Accept-Ranges', 'ETag'],
             preflightContinue: false,
             optionsSuccessStatus: 204
