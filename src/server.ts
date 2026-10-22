@@ -38,10 +38,16 @@ async function main() {
             cacheTTL: 24 * 60 * 60 // 24h
         },
 
-        // Third Party Proxy removal
+        // Third Party Proxy removal & Upstream Header Injection
         proxyConfig: {
             knownThirdPartyProxies: knownThirdPartyProxies,
-            streamPatterns
+            streamPatterns,
+            // Inject headers to prevent 403 Forbidden errors on chunk requests
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Referer': 'https://iframe.imediacdn.vip/',
+                'Origin': 'https://iframe.imediacdn.vip/'
+            }
         },
 
         // Native Framework CORS Configuration
